@@ -17,8 +17,8 @@
 //    },
 //    ...
 //  ]
-const categories = [];
-const categoryIDs = [];
+let categories = [];
+let categoryIDs = [];
 
 /** Get NUM_CATEGORIES random category from API.
  *
@@ -27,7 +27,7 @@ const categoryIDs = [];
  async function getCategoryIds() {
    
     const response = await axios({
-        url: `http://jservice.io/api/categories?count=20`,
+        url: `http://jservice.io/api/categories?count=50`,
         method: "GET",
     });
 
@@ -40,8 +40,10 @@ const categoryIDs = [];
     }
 
     for (let catId of categoryIDs) {
-        getCategory(catId); 
+        await getCategory(catId); 
     }
+    $('#jeopardy').remove;
+    fillTable();
     return categoryIDs;
 }
 //getCategoryIds();
@@ -64,15 +66,15 @@ async function getCategory(catId) {
         url: `http://jservice.io/api/category?id=${catId}`,
         method: "GET",
     });
-    
     let category = catResponse.data;
-    console.log(category.title);
+    //category.forEach(element => categories.push(element));
+    //console.log(category.title);
     categories.push({
         title: category.title,
         id: category.id,
         clues: [ category.clues ],
     });
-    return categories;
+    //return categories;
 }
 
 /** Fill the HTML table#jeopardy with the categories & cells for questions.
@@ -83,37 +85,46 @@ async function getCategory(catId) {
  *   (initally, just show a "?" where the question/answer would go.)
  */
 async function fillTable() {
-    
+
     $("body").append("<table id=\"jeopardy\">");
     
     // headings of table
     $("body").append("<thead>");
     $("body").append("<tr>");
-    console.log(categories);
-    //console.log(category[0].title);
-    console.log(categories.length);
-    // for (let header of categories.data) {
-    //     console.log(header.title);
-    //     $("body").append("<th>${header.title}</th>");
-    // }
+    for (let header of categories) {
+        //console.log(header.title);
+        $("body").append(`<th>${header.title}</th>`);
+    }
     $("body").append("</tr>");
     $("body").append("</thead>");
    
     $("body").append("<tbody>");
 
+    let prize = 200;
+    
     // rows of table
-    $("body").append("<tr>");
-    $("body").append("<td>row 1</td>");
-    $("body").append("<td>row 2</td>");
-    $("body").append("<td>row 3</td>");
-    $("body").append("<td>row 4</td>");
-    $("body").append("<td>row 5</td>");
-    $("body").append("<td>row 6</td>");
-    $("body").append("</tr>");
+    for (let i = 0; i < 5; i++) {
+        $("body").append("<tr>");
+        
 
+        // clues for each category
+        $("body").append(`<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[0].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[0].clues[0][i].answer}</div></div></td>`);
+        $("body").append(`<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[1].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[1].clues[0][i].answer}</div></div></td>`);
+        $("body").append(`<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[2].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[2].clues[0][i].answer}</div></div></td>`);
+        $("body").append(`<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[3].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[3].clues[0][i].answer}</div></div></td>`);
+        $("body").append(`<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[4].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[4].clues[0][i].answer}</div></div></td>`);
+        $("body").append(`<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[5].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[5].clues[0][i].answer}</div></div></td>`);
+ 
+        $("body").append("</tr>");    
+        prize += 200;
+    }
+ 
     $("body").append("</tbody>");
 
     $("body").append("</table>");
+
+    // adding the restart button
+    $("body").append(`<button id="reset">Reset Game</button>`);
 }
 
 /** Handle clicking on a clue: show the question or answer.
@@ -125,6 +136,7 @@ async function fillTable() {
  * */
 
 function handleClick(evt) {
+    // I have functions below that are handling the flipping of the cards
 }
 
 /** Wipe the current Jeopardy board, show the loading spinner,
@@ -138,6 +150,7 @@ function showLoadingView() {
 /** Remove the loading spinner and update the button used to fetch data. */
 
 function hideLoadingView() {
+    
 }
 
 /** Start game:
@@ -146,21 +159,36 @@ function hideLoadingView() {
  * - get data for each category
  * - create HTML table
  * */
-
 async function setupAndStart() {
-    const catIDs = getCategoryIds();
+    let catIDs = getCategoryIds();
     getCategory(catIDs);
-    //console.log(categories);
 }
 
 /** On click of start / restart button, set up game. */
+$("body").append(`<h1>Jeopardy!</h1>`);
+$("body").append("<input type=\"submit\" id=\"startGame\" value=\"Start Game\">");
 
-// TODO
+
+$(document).on("click", '#startGame', function() {
+    //alert($('#jeopardy'));
+    //$('#jeopardy').remove;
+    setupAndStart();
+    $("#startGame").hide();
+});
+
+$(document).on("click", '#reset', function() {
+    categories = [];
+    categoryIDs = [];
+    $('#jeopardy').remove;
+    setupAndStart();
+});
 
 /** On page load, add event handler for clicking clues */
-
-// TODO
-
-// MY CODE
-setupAndStart();
-fillTable();
+$(document).on("click", '.reveal', function() {
+    $(this).hide();
+    $(this).next('.question').show();  
+});
+$(document).on("click", '.question', function() {
+    $(this).hide();
+    $(this).next('.answer').show();  
+});

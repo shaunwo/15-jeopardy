@@ -5,3 +5,31 @@
   #8d2ab5
   #74119c
 */
+
+body {
+  background-color: aquamarine;
+  font-family: 'Courier New', Courier, monospace;
+
+}
+
+table {
+  width: 100%;
+  
+  }
+  table th, table td {
+    width: 18%;
+    overflow: scroll;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+  }
+.card {
+  text-align: center;
+}
+.card .question {
+  background: red;
+  }
+
+.card .answer {
+  background: blue;
+  }
