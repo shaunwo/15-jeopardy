@@ -27,7 +27,7 @@ let categoryIDs = [];
  async function getCategoryIds() {
    
     const response = await axios({
-        url: `http://jservice.io/api/categories?count=50`,
+        url: `https://jservice.io/api/categories?count=50`,
         method: "GET",
     });
 
