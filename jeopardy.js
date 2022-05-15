@@ -63,7 +63,7 @@ async function getCategory(catId) {
     
     // pulling details from the API by the catId
     const catResponse = await axios({
-        url: `http://jservice.io/api/category?id=${catId}`,
+        url: `https://jservice.io/api/category?id=${catId}`,
         method: "GET",
     });
     let category = catResponse.data;
