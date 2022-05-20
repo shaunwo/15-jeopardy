@@ -8,28 +8,34 @@
 
 body {
   background-color: aquamarine;
-  font-family: 'Courier New', Courier, monospace;
-
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
 }
 
 table {
-  width: 100%;
-  
-  }
-  table th, table td {
-    width: 18%;
-    overflow: scroll;
-    white-space: nowrap;
-    display: inline-block;
-    vertical-align: middle;
-  }
+  width: 96%;
+}
+table th,
+table td {
+  width: 16%;
+  overflow: scroll;
+  vertical-align: middle;
+  background-color: #115ff4;
+  color: #fff;
+  height: 130px;
+  font-size: 85%;
+}
+table th {
+  font-size: 100%;
+  background-color: #74119c;
+}
 .card {
   text-align: center;
+  display: block;
 }
-.card .question {
-  background: red;
+/*.card .question {
+  background: #060ce9;
   }
-
 .card .answer {
-  background: blue;
-  }
+  background: #28a200;
+  }*/
