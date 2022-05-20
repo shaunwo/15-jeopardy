@@ -65,14 +65,11 @@ async function getCategory(catId) {
     method: 'GET',
   });
   let category = catResponse.data;
-  //category.forEach(element => categories.push(element));
-  //console.log(category.title);
   categories.push({
     title: category.title.toUpperCase(),
     id: category.id,
     clues: [category.clues],
   });
-  //return categories;
 }
 
 /** Fill the HTML table#jeopardy with the categories & cells for questions.
@@ -122,8 +119,12 @@ async function fillTable() {
   // adding the restart button
   table += `<button id="reset">Reset Game</button>`;
 
+  table += `<div class="overlay"></div>`;
+
   let element = document.getElementsByTagName('body')[0];
   element.innerHTML = table;
+
+  hideLoadingView();
 }
 
 /** Handle clicking on a clue: show the question or answer.
@@ -141,12 +142,16 @@ function handleClick(evt) {
 /** Wipe the current Jeopardy board, show the loading spinner,
  * and update the button used to fetch data.
  */
-
-function showLoadingView() {}
+function showLoadingView() {
+  $('body').addClass('loading');
+}
 
 /** Remove the loading spinner and update the button used to fetch data. */
+function hideLoadingView() {
+  $('body').removeClass('loading');
+}
 
-function hideLoadingView() {}
+// my two jQuery loading spinner functions above were taken from https://www.tutorialrepublic.com/faq/how-to-show-loading-spinner-in-jquery.php
 
 /** Start game:
  *
@@ -155,6 +160,7 @@ function hideLoadingView() {}
  * - create HTML table
  * */
 async function setupAndStart() {
+  showLoadingView();
   let catIDs = getCategoryIds();
   getCategory(catIDs);
 }
@@ -162,10 +168,9 @@ async function setupAndStart() {
 /** On click of start / restart button, set up game. */
 $('body').append(`<h1>Jeopardy!</h1>`);
 $('body').append('<input type="submit" id="startGame" value="Start Game">');
+$('body').append('<div class="overlay"></div>');
 
 $(document).on('click', '#startGame', function () {
-  //alert($('#jeopardy'));
-  //$('#jeopardy').remove;
   setupAndStart();
   $('#startGame').hide();
 });
@@ -173,7 +178,6 @@ $(document).on('click', '#startGame', function () {
 $(document).on('click', '#reset', function () {
   categories = [];
   categoryIDs = [];
-  $('#jeopardy').remove;
   setupAndStart();
 });
 
