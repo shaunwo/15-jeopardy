@@ -18,7 +18,6 @@ table {
 table th,
 table td {
   width: 16%;
-  overflow: scroll;
   vertical-align: middle;
   background-color: #115ff4;
   color: #fff;
