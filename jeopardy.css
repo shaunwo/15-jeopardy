@@ -14,31 +14,62 @@ body {
 
 table {
   width: 96%;
+  margin-top: 10px;
 }
 table th,
 table td {
   width: 16%;
-  overflow: scroll;
   vertical-align: middle;
   background-color: #115ff4;
   color: #fff;
-  height: 130px;
-  font-size: 85%;
+  height: 80px;
+  font-size: 75%;
 }
 table th {
-  font-size: 100%;
+  font-size: 90%;
   background-color: #74119c;
 }
 .card {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  overflow: auto;
+  height: 100%;
   text-align: center;
-  display: block;
+  cursor: pointer;
 }
-/*.card .question {
+.card .question {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  overflow: auto;
+  height: 100%;
+  text-align: center;
+  cursor: pointer;
   background: #060ce9;
-  }
+  padding: 2px;
+}
 .card .answer {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  overflow: auto;
+  height: 100%;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
   background: #28a200;
-  }*/
+  padding: 2px;
+}
 
 /* BEGIN STYLES FOR LOADER
 Taken from: https://www.tutorialrepublic.com/faq/how-to-show-loading-spinner-in-jquery.php

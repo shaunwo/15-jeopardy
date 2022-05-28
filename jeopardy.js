@@ -82,6 +82,9 @@ async function getCategory(catId) {
 async function fillTable() {
   let table = `<h1>Jeopardy!</h1>`;
 
+  // adding the restart button
+  table += `<button id="reset">Reset Game</button>`;
+
   table += `<table id="jeopardy"><thead><tr>`;
 
   // headings of table
@@ -101,12 +104,9 @@ async function fillTable() {
     table += `<tr>`;
 
     // clues for each category
-    table += `<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[0].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[0].clues[0][i].answer}</div></div></td>`;
-    table += `<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[1].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[1].clues[0][i].answer}</div></div></td>`;
-    table += `<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[2].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[2].clues[0][i].answer}</div></div></td>`;
-    table += `<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[3].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[3].clues[0][i].answer}</div></div></td>`;
-    table += `<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[4].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[4].clues[0][i].answer}</div></div></td>`;
-    table += `<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[5].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[5].clues[0][i].answer}</div></div></td>`;
+    for (let j = 0; j <= 5; j++) {
+      table += `<td><div class="card"><div class="reveal">$${prize}</div><div class="question" style="display: none;">${categories[j].clues[0][i].question}</div><div class="answer" style="display: none;">${categories[j].clues[0][i].answer}</div></div></td>`;
+    }
 
     table += `</tr>`;
     prize += 200;
@@ -115,9 +115,6 @@ async function fillTable() {
   table += `</tbody>`;
 
   table += `</table>`;
-
-  // adding the restart button
-  table += `<button id="reset">Reset Game</button>`;
 
   table += `<div class="overlay"></div>`;
 
